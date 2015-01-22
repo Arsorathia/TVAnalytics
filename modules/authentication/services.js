@@ -35,13 +35,15 @@ angular.module('Authentication')
 //
       };
 
-        service.SetCredentials = function (username, password) {
+        service.SetCredentials = function (username, password, adminpassword ) {
             var authdata = Base64.encode(username + ':' + password);
+            var adminaccess = adminpassword ==='chicken';
 
             $rootScope.globals = {
                 currentUser: {
                     username: username,
-                    authdata: authdata
+                    authdata: authdata, 
+                    adminaccess: adminaccess
                 }
             };
 
