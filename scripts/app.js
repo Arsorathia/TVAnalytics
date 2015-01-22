@@ -34,6 +34,11 @@ angular.module('BasicHttpAuthExample', [
             templateUrl: 'modules/browse/views/browse.html'
         })
         
+            .when('/manage', {
+            controller: 'BrowseController',
+            templateUrl: 'modules/browse/views/browse.html'
+        })
+        
         .when('/browse/:id', {
             controller: 'ProjectController',
             templateUrl: 'modules/projects/views/project.html'
@@ -57,5 +62,11 @@ angular.module('BasicHttpAuthExample', [
             if ($location.path() !== '/login' && !$rootScope.globals.currentUser) {
                 $location.path('/login');
             }
+            // redirect to browse page if manage page accessed by non admin
+            if ($location.path() === '/manage' && !$rootScope.globals.currentUser.adminaccess) {
+                $location.path('/browse');
+            }
         });
+        
+        
     }]);
