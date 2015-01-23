@@ -9,7 +9,7 @@ angular.module('Serv')
     $scope.fetch = function(url) {
       $scope.chicken = url.length;
       
-      $http({method: 'GET', url: url}).
+      $http({method: 'GET', url: 'http://graph.facebook.com/' + url}).
         success(function(data, status) {
           $scope.status = status;
           $scope.data = data;
