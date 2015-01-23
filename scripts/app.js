@@ -6,6 +6,7 @@ angular.module('Home', []);
 angular.module('Browse', []);
 angular.module('Projects', []);
 angular.module('Manage', []);
+angular.module('Serv', []);
 
 
 angular.module('BasicHttpAuthExample', [
@@ -13,6 +14,7 @@ angular.module('BasicHttpAuthExample', [
     'Home',
     'Browse',
     'Manage',
+    'Serv',
     'Projects',
     'ngRoute',
     'ngCookies'
@@ -35,6 +37,11 @@ angular.module('BasicHttpAuthExample', [
         .when('/browse', {
             controller: 'BrowseController',
             templateUrl: 'modules/browse/views/browse.html'
+        })
+        
+            .when('/serv', {
+            controller: 'ServController',
+            templateUrl: 'modules/http/views/http.html'
         })
         
             .when('/manage', {
