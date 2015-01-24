@@ -4,6 +4,9 @@
 </button>
 
 <p>You're logged in!! {{username}}</p>
+<input type="text" ng-model="chart.title.text" name="title" size = 40/>
+<input type="number" ng-model="chart.series[3].data[3]" name="custom" size = 40/>
+<highchart id="chart1" config="chart"></highchart>
 
   <h3>Cookies</h3>
   <pre>{{usingCookies|json}}</pre>
