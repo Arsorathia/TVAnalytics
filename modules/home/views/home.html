@@ -1,4 +1,8 @@
-﻿<h1>Home</h1>
+﻿<h1>Home</h1> 
+<button ng-hide="loggedIn" class="btn" ng-click="fblogin()">
+<span class="glyphicon glyphicon-open"></span>&nbsp;&nbsp;Connect with Facebook
+</button>
+
 <p>You're logged in!! {{username}}</p>
 
   <h3>Cookies</h3>
@@ -7,3 +11,5 @@
   <pre>{{usingCookieStore|json}}</pre>
 	<h3>User</h3>
   <pre>{{theuser|json}}</pre>
+  <p> {{loggedIn}} </p> 
+  <p> {{fbuser}} </p>

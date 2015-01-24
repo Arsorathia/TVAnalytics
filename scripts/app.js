@@ -16,9 +16,16 @@ angular.module('BasicHttpAuthExample', [
     'Manage',
     'Serv',
     'Projects',
+    'facebook',
     'ngRoute',
     'ngCookies'
 ])
+
+.config(function(FacebookProvider) {
+     // Set your appId through the setAppId method or
+     // use the shortcut in the initialize method directly.
+     FacebookProvider.init('528830580592609');
+  })
 
 .config(['$routeProvider', function ($routeProvider) {
 
@@ -54,19 +61,44 @@ angular.module('BasicHttpAuthExample', [
             templateUrl: 'modules/projects/views/project.html'
         })
         
-        
-
         .otherwise({ redirectTo: '/login' });
 }])
 
-.run(['$rootScope', '$location', '$cookieStore', '$http',
-    function ($rootScope, $location, $cookieStore, $http) {
+.run(['$rootScope', '$location', '$cookieStore', '$http', 'Facebook',
+    function ($rootScope, $location, $cookieStore, $http, Facebook) {
         // keep user logged in after page refresh
         $rootScope.globals = $cookieStore.get('globals') || {};
         if ($rootScope.globals.currentUser) {
             $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
         }
 
+	 $rootScope.fblogin = function() {
+      // From now on you can use the Facebook service just as Facebook api says
+      Facebook.login(function(response) {
+        // Do something with response.
+          if (response.status == 'connected') {
+            $rootScope.loggedIn = true;
+            $rootScope.me();
+          }
+      });
+    };
+
+    $rootScope.getLoginStatus = function() {
+      Facebook.getLoginStatus(function(response) {
+        if(response.status === 'connected') {
+          $rootScope.loggedIn = true;
+        } else {
+          $rootScope.loggedIn = false;
+        }
+      });
+    };
+
+    $rootScope.me = function() {
+      Facebook.api('/me', function(response) {
+        $rootScope.fbuser = response;
+      });
+    };
+		
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             // redirect to login page if not logged in
             if ($location.path() !== '/login' && !$rootScope.globals.currentUser) {
