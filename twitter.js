@@ -1,4 +1,8 @@
   var Twit = require('twit');
+  var io = require('./server').io;
+  var TWEETS_BUFFER_SIZE = 3;
+
+
   
   var T = new Twit({
     consumer_key:         'uxyWok0L2AkxgUE74qw4Qv9Gz',
@@ -24,19 +28,51 @@ stream.on('reconnect', function (request, response, connectInterval) {
 })
  
 stream.on('tweet', function(tweet) {
-    if (tweet.geo == null) {
+    if (tweet.place == null) {
         return ;
     }
  
-    //Create message containing tweet + username + profile pic + geo
+    //Create message containing tweet + username + profile pic + location
     var msg = {};
     msg.text = tweet.text;
-    msg.geo = tweet.geo.coordinates;
+    msg.location = tweet.place.full_name;
     msg.user = {
         name: tweet.user.name,
         image: tweet.user.profile_image_url
     };
  
-    console.log(msg);
+    //push msg into buffer
+    tweetsBuffer.push(msg);
+ 
+    //send buffer only if full
+    if (tweetsBuffer.length >= TWEETS_BUFFER_SIZE) {
+        //broadcast tweets
+        io.sockets.emit('tweets', tweetsBuffer);
+        tweetsBuffer = [];
+    }
+});
+
+var nbOpenSockets = 0;
+ 
+io.sockets.on('connection', function(socket) {
+    console.log('Client connected !');
+    if (nbOpenSockets <= 0) {
+        nbOpenSockets = 0;
+        console.log('First active client. Start streaming from Twitter');
+        stream.start();
+    }
+ 
+    nbOpenSockets++;
+ 
+    socket.on('disconnect', function() {
+        console.log('Client disconnected !');
+        nbOpenSockets--;
+ 
+        if (nbOpenSockets <= 0) {
+            nbOpenSockets = 0;
+            console.log("No active client. Stop streaming from Twitter");
+            stream.stop();
+        }
+    });
 });
 
