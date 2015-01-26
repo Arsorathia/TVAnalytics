@@ -23,4 +23,8 @@
   </tr></tbody>
 </table>
 
-{{tweets}}
+<span ng-repeat="tweet in tweets | reverse">
+       <img alt="{{tweet.user.name}}" height="52" width="52" src="{{tweet.user.image}}" />
+        <h4 > {{tweet.user.name}} @ {{tweet.location}}</h4>
+        <h5>{{tweet.text}}</h5>
+</span>

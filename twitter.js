@@ -1,6 +1,6 @@
   var Twit = require('twit');
   var io = require('./server').io;
-  var TWEETS_BUFFER_SIZE = 3;
+  var TWEETS_BUFFER_SIZE = 10;
 
 
   
