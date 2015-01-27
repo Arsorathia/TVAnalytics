@@ -1,6 +1,6 @@
   var Twit = require('twit');
   var io = require('./server').io;
-  var TWEETS_BUFFER_SIZE = 10;
+  var TWEETS_BUFFER_SIZE = 5;
 
 
   
@@ -11,8 +11,8 @@
     access_token_secret:  'ktMV3f5OLpPoVZ5ZECjxcb7qw4oOPg9j8n7EMzB8MbdKo'
 });
 
-console.log("Listening for tweets from San Francisco...");
-var stream = T.stream('statuses/filter', { locations: [-122.75,36.8,-121.75,37.8] });
+console.log("Listening for tweets about mango");
+var stream = T.stream('statuses/filter', { track: 'mango' , language: 'en'});
 var tweetsBuffer = [];
  
 stream.on('connect', function(request) {
@@ -28,18 +28,13 @@ stream.on('reconnect', function (request, response, connectInterval) {
 })
  
 stream.on('tweet', function(tweet) {
-    if (tweet.place == null) {
-        return ;
-    }
  
     //Create message containing tweet + username + profile pic + location
     var msg = {};
     msg.text = tweet.text;
-    msg.location = tweet.place.full_name;
-    msg.user = {
-        name: tweet.user.name,
-        image: tweet.user.profile_image_url
-    };
+    msg.id = tweet.id_str;
+    msg.name = tweet.user.name;
+
  
     //push msg into buffer
     tweetsBuffer.push(msg);
