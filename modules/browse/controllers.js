@@ -38,6 +38,11 @@ socket.on('tweets', function (data) {
     $scope.number = $scope.tweets.length
 });
 
+socket.on('clear', function (data) {
+$scope.chartConfig.series[0].data = [])
+});
+
+
 socket.on('whatwhat', function (data) {
 $scope.average = $scope.average.concat(data);
 $scope.chartConfig.series[0].data = $scope.chartConfig.series[0].data.concat([[data.number, data.average]])
