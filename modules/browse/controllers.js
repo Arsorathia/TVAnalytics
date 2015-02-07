@@ -3,7 +3,7 @@
 angular.module('Browse',["highcharts-ng"])
 
   .factory('socket', function($rootScope){
-   var socket = io.connect('http://localhost:8080');
+   var socket = io.connect('http://54.175.133.110:8080');
     return {
         on: function (eventName, callback) {
             socket.on(eventName, function () {
