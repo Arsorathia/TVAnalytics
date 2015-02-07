@@ -5,13 +5,13 @@ var sentiment = require('sentiment');
 
  
  var T = new Twit({
-    consumer_key:         'uxyWok0L2AkxgUE74qw4Qv9Gz',
-    consumer_secret:      'kjvaho9d3MlOyvCSC8To7qlLLaLO6UfgBGRnMrvE2px73aX6QJ',
-    access_token:         '33256579-0bPCbBH8FvEb5UaOkf0ZwyKDxEueHUPUtYW4IDE79',
-    access_token_secret:  'ktMV3f5OLpPoVZ5ZECjxcb7qw4oOPg9j8n7EMzB8MbdKo'
+    consumer_key:         'gyRCME1j5knQUlypAzosw',
+    consumer_secret:      '7kHYP279mnzifdvWocXKdraD2lOIlmFodZXXPj6UA0',
+    access_token:         '33256579-VC5X2TMPkkKH57pGWX5yX4lILFjkpnNTHWqwj5H1L',
+    access_token_secret:  'OcCjWKuft0rG87CwFEJ5UuZoX1HgnqEQRf4YFdAzBI'
 });
 
-console.log("Listening for tweets about mango");
+console.log("Listening for tweets about data");
 var stream = T.stream('statuses/filter', { track: 'data' , language: 'en'});
 
 io.on('connection', function(socket){
