@@ -36,6 +36,7 @@ io.on('connection', function(socket){
 });
 
 setInterval(function(){
+    if (tweetagg.length > 20) {tweetagg = []}
     if (tweetagg.length > 0)
     {
     var total = tweetagg.reduce(function(a, b) {
