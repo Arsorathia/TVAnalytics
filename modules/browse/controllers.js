@@ -39,7 +39,7 @@ socket.on('tweets', function (data) {
 });
 
 socket.on('clear', function (data) {
-$scope.chartConfig.series[0].data = [])
+$scope.chartConfig.series[0].data = []
 });
 
 
