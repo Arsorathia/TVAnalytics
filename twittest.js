@@ -25,7 +25,6 @@ var tweetagg = []
     msg.id = tweet.id_str;
     msg.name = tweet.user.name;
     msg.sentiment = sentiment(tweet.text).score
-	console.log(msg);
 	io.sockets.emit('tweets', msg)
 	tweetagg.push(msg.sentiment)
 });
